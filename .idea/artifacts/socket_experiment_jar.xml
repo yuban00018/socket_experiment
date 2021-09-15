@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="socket_experiment:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/socket_experiment_jar</output-path>
+    <root id="archive" name="socket_experiment.jar">
+      <element id="module-output" name="socket_experiment" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java_sdk/mysql-connector-java-8.0.26.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
