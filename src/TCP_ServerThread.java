@@ -7,7 +7,7 @@ public class TCP_ServerThread extends Thread {
 
     private final TCP_Server server;
     private final int port;
-    private ArrayList<TCP_SessionThread> thread_list;
+    public static ArrayList<TCP_SessionThread> thread_list;
 
     public TCP_ServerThread(TCP_Server server,int port){
         this.server = server;

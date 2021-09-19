@@ -69,7 +69,7 @@ public class TCP_Server {
                 User user = new User();
                 socket = userCheck(socket,user);
                 if(socket == null){
-                    System.out.println("an invalid user from IP: "+address.getHostAddress()+" try to login");
+                    System.out.println("an invalid user from IP: "+address.getAddress()+" try to login");
                 } else {
                     System.out.println("user "+user.getUsername()+" login success");
                     TCP_SessionThread thread = new TCP_SessionThread(socket,user);

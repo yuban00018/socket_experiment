@@ -21,7 +21,7 @@ public class TCP_ServerWindow {
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                status.setText("running");
+                status.setText("Running");
                 startButton.setEnabled(false);
                 stopButton.setEnabled(true);
                 port.setEnabled(false);
@@ -61,17 +61,16 @@ public class TCP_ServerWindow {
                 if(e.getKeyChar() == KeyEvent.VK_ENTER){
                     if(server_thread != null){
                         if(command.getText().equals("stop")){
-                            if(server_thread != null){
-                                response.setText("Server Stopped");
-                                System.out.println("try to stop server");
-                                server_thread.interrupt();
-                                status.setText("Stopped");
-                                startButton.setEnabled(true);
-                                stopButton.setEnabled(false);
-                                command.setEnabled(false);
-                                command.setText("");
-                                response.setText("");
-                            }
+                            response.setText("Server Stopped");
+                            System.out.println("try to stop server");
+                            server_thread.interrupt();
+                            status.setText("Stopped");
+                            startButton.setEnabled(true);
+                            stopButton.setEnabled(false);
+                            command.setEnabled(false);
+                            command.setText("");
+                            response.setText("");
+                            return;
                         }
                         response.setText(server_thread.command_line(command.getText()));
                     } else {

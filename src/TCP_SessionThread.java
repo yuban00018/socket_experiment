@@ -37,6 +37,7 @@ public class TCP_SessionThread extends Thread{
                         else if(info.matches("quit")){
                             System.out.println("User: "+username+" disconnected");
                             disconnect(is, isr, br, os, pw);
+                            TCP_ServerThread.thread_list.remove(this);
                             return;
                         }
                         System.out.println("Message from " + username + " said: " + info);
