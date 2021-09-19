@@ -73,6 +73,7 @@ public class TCP_ServerThread extends Thread {
         System.out.println("TCP/IP Server running");
         try{
             ServerSocket serverSocket = new ServerSocket(port);
+            // 设置accept的失效时间，这样才能收到interrupt来终止服务器的运行
             serverSocket.setSoTimeout(1);
             Socket socket;
             while(!isInterrupted()) {
@@ -82,18 +83,20 @@ public class TCP_ServerThread extends Thread {
                     User user = new User();
                     socket = TCP_Server.userCheck(socket, user);
                     if (socket == null) {
-                        System.out.println("an invalid user from IP: " + address.getHostAddress() + " try to login");
+                        // 返回为空说明是非法会话
+                        System.out.println("an invalid user from IP: " + address.getAddress() + " try to login");
                     } else {
+                        // 对合法用户，建立新的会话
                         System.out.println("user " + user.getUsername() + " login success");
                         TCP_SessionThread thread = new TCP_SessionThread(socket, user);
                         thread.start();
                         thread_list.add(thread);
-                        // System.out.println(thread_list);
                     }
                 } catch (SocketTimeoutException e) {
                     // just continue
                 }
             }
+            // 终结所有的会话
             for(TCP_SessionThread thread : thread_list){
                 System.out.println("Try to stop thread: "+thread.user.getUsername());
                 thread.interrupt();

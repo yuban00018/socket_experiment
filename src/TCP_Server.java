@@ -11,6 +11,7 @@ public class TCP_Server {
 
     private static Scanner sc = new Scanner(System.in);
 
+    // 用户验证
     public static Socket userCheck(Socket socket, User user){
         InputStream is;
         InputStreamReader isr;
@@ -26,7 +27,9 @@ public class TCP_Server {
             pw = new PrintWriter(os);
             String info;
             info = br.readLine();
+            // 符合登录验证头，否则是非法请求
             if (info != null && info.matches("l0g1nRequest")) {
+                // 调用用户服务去查询用户合法性
                 userService userService = new userService();
                 username = br.readLine();
                 String password = br.readLine();
@@ -57,11 +60,11 @@ public class TCP_Server {
         return socket;
     }
 
+    // 单线程服务器，不应该被使用
     public static void runServer(int port){
         System.out.println("TCP/IP Server running");
         try{
             ServerSocket serverSocket = new ServerSocket(port);
-            //serverSocket.setSoTimeout(1);
             Socket socket=null;
             while(true){
                 socket = serverSocket.accept();
@@ -82,6 +85,7 @@ public class TCP_Server {
     }
 
     public static void main(String[] args){
-        runServer(8088);
+        // 运行单线程服务器
+        // runServer(8088);
     }
 }

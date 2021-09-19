@@ -26,6 +26,7 @@ public class TCP_ServerWindow {
                 stopButton.setEnabled(true);
                 port.setEnabled(false);
                 command.setEnabled(true);
+                // 运行一个服务器线程，这样就不会卡死单线程的UI
                 new Thread() {
                     @Override
                     public void run(){
@@ -43,6 +44,7 @@ public class TCP_ServerWindow {
             public void mouseClicked(MouseEvent e) {
                 if(server_thread != null){
                     System.out.println("try to stop server");
+                    // 终结服务器线程
                     server_thread.interrupt();
                     status.setText("Stopped");
                     startButton.setEnabled(true);
@@ -50,6 +52,7 @@ public class TCP_ServerWindow {
                     command.setEnabled(false);
                     command.setText("");
                     response.setText("");
+                    server_thread = null;
                 }
             }
         });
@@ -70,6 +73,7 @@ public class TCP_ServerWindow {
                             command.setEnabled(false);
                             command.setText("");
                             response.setText("");
+                            server_thread = null;
                             return;
                         }
                         response.setText(server_thread.command_line(command.getText()));

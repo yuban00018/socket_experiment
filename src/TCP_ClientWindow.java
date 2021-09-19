@@ -66,13 +66,16 @@ public class TCP_ClientWindow {
                 }
             }
         });
+        // 登录事件
         loginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 my_name = username.getText();
+                // 发起登录请求，如果成功了就会返回socket，失败则为null
                 socket = TCP_Client.Login(login_address.getText(),username.getText(),new String(password.getPassword()),Integer.valueOf(port.getText()));
                 try {
                     if (socket!=null) {
+                        // 隐藏登陆面板，展示通信面板
                         LoginPanel.setVisible(false);
                         frame.setContentPane(new TCP_ClientWindow().ClientPanel);
                         frame.setSize(400,150);
@@ -86,6 +89,7 @@ public class TCP_ClientWindow {
             }
         });
 
+        // 这里的键盘监听都是为了捕获回车键，功能和上面是一样的，不用管，除非上面的点击事件发生更改
         textField1.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {

@@ -29,17 +29,21 @@ public class TCP_SessionThread extends Thread{
             pw = new PrintWriter(os);
                 while(!isInterrupted()) {
                     while (!isInterrupted()&&(info = br.readLine()) != null) {
+                        // 如果是连接检测程序，直接返回alive即可
                         if(info.matches("TesT")){
                             pw.write("alive\n");
                             pw.flush();
                             continue;
                         }
+                        // 收到退出请求，关闭流并关闭连接
                         else if(info.matches("quit")){
                             System.out.println("User: "+username+" disconnected");
                             disconnect(is, isr, br, os, pw);
+                            // 对于退出指令，需要主动从thread_list里清除本线程，否则线程关闭后还被存储在list中
                             TCP_ServerThread.thread_list.remove(this);
                             return;
                         }
+                        // 否则直接返回收到的信息
                         System.out.println("Message from " + username + " said: " + info);
                         pw.write("Received "+info+"\n");
                         pw.flush();
