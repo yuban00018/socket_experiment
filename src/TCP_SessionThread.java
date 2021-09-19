@@ -1,12 +1,11 @@
 import Bean.User;
-import service.userService;
 
 import java.io.*;
 import java.net.Socket;
 
 public class TCP_SessionThread extends Thread{
-    private Socket socket = null;
-    private User user;
+    private final Socket socket;
+    public final User user;
 
     public TCP_SessionThread(Socket socket, User user){
         this.user = user;
@@ -22,15 +21,20 @@ public class TCP_SessionThread extends Thread{
         PrintWriter pw = null;
         String username = user.getUsername();
         try{
-            String info = null;
+            String info;
             is = socket.getInputStream();
             isr = new InputStreamReader(is);
             br = new BufferedReader(isr);
             os = socket.getOutputStream();
             pw = new PrintWriter(os);
-                while(true) {
-                    while ((info = br.readLine()) != null) {
-                        if(info.matches("quit")){
+                while(!isInterrupted()) {
+                    while (!isInterrupted()&&(info = br.readLine()) != null) {
+                        if(info.matches("TesT")){
+                            pw.write("alive\n");
+                            pw.flush();
+                            continue;
+                        }
+                        else if(info.matches("quit")){
                             System.out.println("User: "+username+" disconnected");
                             disconnect(is, isr, br, os, pw);
                             return;
@@ -44,6 +48,7 @@ public class TCP_SessionThread extends Thread{
             e.printStackTrace();
         } finally{
             try{
+                System.out.println("Session: "+username+" is closed");
                 disconnect(is, isr, br, os, pw);
             } catch (Exception e){
                 e.printStackTrace();
