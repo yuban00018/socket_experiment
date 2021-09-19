@@ -21,7 +21,7 @@ public class TCP_ServerThread extends Thread {
         StringBuilder name_list = new StringBuilder();
         name_list.append("Running Sessions: \n");
         for(TCP_SessionThread thread:thread_list){
-            name_list.append(thread.user.getUsername());
+            name_list.append(thread.user.getUsername()+"\n");
         }
         return name_list.toString();
     }
